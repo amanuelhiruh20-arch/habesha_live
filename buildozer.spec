@@ -1,42 +1,18 @@
-# (str) Title of your application
-title = Habesha Live
+name: Build APK with Buildozer
 
-# (str) Package name
-package.name = habeshalive
+on:
+  push:
+    branches: [ main ]
 
-# (str) Package domain (needed for android packaging)
-package.domain = org.habesha 
-# (str) Source file to start (main Python file)
-source.file = main.py
-[app]
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-# (str) Title of your application
-title = Habesha Live
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-# (str) Package name
-package.name = habeshalive
-
-# (str) Package domain (needed for android packaging)
-package.domain = org.habesha
-
-# (list) Source files to include (let it include everything needed)
-source.include_exts = py,png,jpg,kv,atlas
-
-# (str) Application versioning
-version = 0.1
-
-# (list) Application requirements
-requirements = python3,kivy
-
-# (str) Source file to start (main Python file)
-source.file = main.py
-
-# (string) Presets
-orientation = portrait
-fullscreen = 0
-
-# (int) Target Android API, should be as high as possible.
-android.api = 33
-
-# (int) Minimum API your APK will support.
-android.minapi = 21
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          command: buildozer -v android debug
